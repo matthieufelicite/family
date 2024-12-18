@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import { auth } from "@/lib/auth";
-import LoginPage from "@/pages/LoginPage";
-import FamilyChoicePage from "@/pages/FamilyChoicePage";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Header from "@/components/Header";
+import { redirect } from "next/navigation";
+import Header from "@/components/header";
+import Heading from "@/components/heading";
+import ReadAllTasks from "@/components/tasks/read-all-tasks";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
 
@@ -16,12 +16,19 @@ export default async function Page() {
 
 	const session = await auth();
 
-	if (!session?.user) return <LoginPage />
-
-	if (session?.user && !session.user.familyId) return <FamilyChoicePage />
+	if (!session?.user) redirect('/login')
 
 	return (
 
-		<Header />
+		<>
+			<Header />
+
+			<Heading />
+
+			<SessionProvider>
+
+				<ReadAllTasks />
+			</SessionProvider>
+		</>
 	);
 }
