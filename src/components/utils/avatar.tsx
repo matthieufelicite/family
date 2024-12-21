@@ -1,9 +1,12 @@
 import { handleSignOut } from "@/actions/authentication/signout";
 import { Avatar as AvatarContainer, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { auth } from "@/lib/auth";
 import { LogOut } from "lucide-react";
 
-export default function Avatar() {
+export default async function Avatar() {
+
+    const session = await auth();
 
     return (
 
@@ -21,9 +24,9 @@ export default function Avatar() {
 
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-52">
+            <DropdownMenuContent>
 
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{session?.user.email}</DropdownMenuLabel>
 
                 <DropdownMenuSeparator />
 

@@ -1,96 +1,95 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("FAMILY_DATABASE_URL")
-  directUrl = env("FAMILY_DATABASE_URL_UNPOOLED")
+    provider = "postgresql"
+    url      = env("FAMILY_DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  familyId      String?
-  accounts      Account[]
-  sessions      Session[]
-  family        Family?   @relation(fields: [familyId], references: [id], onDelete: SetNull)
-  tasks         Task[]
-  histories     History[]
+    id            String    @id @default(cuid())
+    name          String?
+    email         String    @unique
+    emailVerified DateTime?
+    image         String?
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    familyId      String?
+    accounts      Account[]
+    sessions      Session[]
+    family        Family?   @relation(fields: [familyId], references: [id], onDelete: SetNull)
+    tasks         Task[]
+    histories     History[]
 
-  @@index([familyId])
+    @@index([familyId])
 }
 
 model Family {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  users     User[]
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    users     User[]
 }
 
 model Account {
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+    user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@id([provider, providerAccountId])
+    @@id([provider, providerAccountId])
 }
 
 model Session {
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+    identifier String
+    token      String
+    expires    DateTime
 
-  @@id([identifier, token])
+    @@id([identifier, token])
 }
 
 model Task {
-  id          String    @id @default(cuid())
-  label       String
-  description String?
-  userId      String?
-  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
-  histories   History[]
+    id          String    @id @default(cuid())
+    label       String
+    description String?
+    userId      String?
+    user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+    histories   History[]
 
-  @@index([userId])
+    @@index([userId])
 }
 
 model History {
-  id        String   @id @default(cuid())
-  date      DateTime @default(now())
-  taskId    String
-  userId    String
-  completed Boolean  @default(false)
-  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id        String   @id @default(cuid())
+    date      DateTime @default(now())
+    taskId    String
+    userId    String
+    completed Boolean  @default(false)
+    task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([taskId])
-  @@index([userId, date])
+    @@index([taskId])
+    @@index([userId, date])
 }

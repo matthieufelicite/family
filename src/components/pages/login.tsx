@@ -1,13 +1,13 @@
 "use client"
 
 import { handleSignIn } from "@/actions/authentication/signin";
-import Spinner from "@/components/spinner";
+import Spinner from "@/components/utils/spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function Login() {
 
     const [isLoading, setIsLoading] = useState(false)
 

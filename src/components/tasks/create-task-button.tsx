@@ -16,7 +16,12 @@ import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 
-export function CreateTaskButton() {
+interface Props {
+
+    className?: string;
+}
+
+export default function CreateTaskButton({ className }: Props) {
 
     const [open, setOpen] = useState(false)
 
@@ -39,7 +44,7 @@ export function CreateTaskButton() {
 
         <Dialog open={open} onOpenChange={setOpen}>
 
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className={className}>
 
                 <Button variant='default'>Créer une tâche</Button>
             </DialogTrigger>
