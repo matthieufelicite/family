@@ -6,7 +6,6 @@ import ReverseTaskButton from "./reverse-task-button";
 import { Card } from "../ui/card";
 import { CustomTask } from "@/actions/history/read-histories";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { auth } from "@/lib/auth";
 import { useSession } from "next-auth/react";
 
 interface Props {

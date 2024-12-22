@@ -15,6 +15,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useDate } from "../providers/date-provider";
 import readHistories from "@/actions/history/read-histories";
+import { useSession } from "next-auth/react";
+import { useFamily } from "../providers/family-provider";
 
 interface Props {
 
@@ -22,6 +24,8 @@ interface Props {
 }
 
 export default function DatePicker({ className }: Props) {
+
+    const familyContext = useFamily();
 
     const dateContext = useDate();
 
@@ -31,9 +35,11 @@ export default function DatePicker({ className }: Props) {
 
     async function handleSelect(selectedDate: Date | undefined) {
 
+        if (!familyContext.family) return;
+
         if (!selectedDate) return;
 
-        await readHistories({ date: selectedDate });
+        await readHistories({ date: selectedDate, familyId: familyContext.family?.id });
 
         setDate(selectedDate);
 
