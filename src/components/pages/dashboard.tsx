@@ -1,18 +1,25 @@
-import Header from "../utils/header";
-import ReadAllTasks from "../tasks/read-all-tasks";
-import Heading from "../utils/heading";
+import Header from "@/components/utils/header";
+import ReadAllTasks from "@/components/tasks/read-all-tasks";
+import Heading from "@/components/utils/heading";
+import { FamilyProvider } from "@/components/providers/family-provider";
+import { DateProvider } from "../providers/date-provider";
 
-export default function Dashboard() {
+export default function DashboardPage() {
 
     return (
 
-        <>
+        <FamilyProvider>
 
-            <Header />
+            <DateProvider>
 
-            <Heading />
+                <Header />
 
-            <ReadAllTasks />
-        </>
+                <Heading />
+
+                <ReadAllTasks />
+
+            </DateProvider>
+
+        </FamilyProvider>
     );
 }

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { FormEvent, ReactElement } from "react";
 import { deleteHistory } from "@/actions/history/delete-history";
+import { useDate } from "../providers/date-provider";
 
 interface Props {
 
@@ -13,13 +14,15 @@ interface Props {
 
 export default function ReverseTaskButton({ taskId }: Props): ReactElement {
 
+    const dateContext = useDate();
+
     const router = useRouter();
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 
         event.preventDefault();
 
-        await deleteHistory({ taskId });
+        await deleteHistory({ taskId: taskId, date: dateContext.date });
 
         router.refresh();
     }

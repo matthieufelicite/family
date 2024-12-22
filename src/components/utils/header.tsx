@@ -1,6 +1,6 @@
 import Avatar from '@/components/utils/avatar';
 import ThemeToggle from '@/components/utils/theme-toggle';
-import FamilyChoiceContainer from '../family/family-choice-container';
+import FamilyChoiceContainer from '@/components/family/family-choice-container';
 
 export default function Header() {
 

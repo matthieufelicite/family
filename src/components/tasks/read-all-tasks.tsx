@@ -1,9 +1,48 @@
+"use client"
+
+import { useEffect, useState } from "react";
 import ReadOneTask from "./read-one-task";
-import { readTodayTasks, TaskWithStatus } from "@/actions/history/read-today-tasks";
+import { TaskWithStatus } from "@/actions/history/read-today-tasks";
+import { useDate } from "../providers/date-provider";
+import { readTodayTasksWithDate } from "@/actions/history/read-today-tasks-with-date";
 
-export default async function ReadAllTasks() {
+export default function ReadAllTasks() {
 
-    const tasks: TaskWithStatus[] = await readTodayTasks();
+    const dateContext = useDate();
+
+    const [tasks, setTasks] = useState<TaskWithStatus[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+
+        async function readTasks() {
+
+            try {
+
+                console.log(dateContext.date)
+
+                setTasks(await readTodayTasksWithDate({ date: dateContext.date }));
+            }
+            catch (error) {
+
+                console.error("Erreur lors de la récupération des tâches : ", error);
+            }
+            finally {
+
+                setLoading(false);
+            }
+        }
+
+        readTasks()
+    }, [dateContext])
+
+    if (loading) {
+
+        return (
+
+            <div className="flex justify-start items-center p-6">Chargement des tâches...</div>
+        );
+    }
 
     return (
 

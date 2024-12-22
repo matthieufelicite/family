@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
+import { useFamily } from "../providers/family-provider"
 
 interface Props {
 
@@ -22,6 +23,8 @@ interface Props {
 }
 
 export default function CreateTaskButton({ className }: Props) {
+
+    const familyContext = useFamily();
 
     const [open, setOpen] = useState(false)
 
@@ -33,7 +36,7 @@ export default function CreateTaskButton({ className }: Props) {
 
         const formData = new FormData(event.currentTarget)
 
-        await createTask({ formData })
+        await createTask({ formData: formData, familyId: familyContext.family?.id })
 
         router.refresh()
 

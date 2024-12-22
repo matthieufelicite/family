@@ -5,15 +5,14 @@ import { prisma } from "@/lib/prisma";
 interface Props {
 
     taskId: string;
+    date: Date;
 }
 
-export async function deleteHistory({ taskId }: Props): Promise<void> {
+export async function deleteHistory({ taskId, date }: Props): Promise<void> {
 
-    const today = new Date();
+    const startOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
 
-    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
-
-    const endOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+    const endOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
 
     try {
 

@@ -14,6 +14,7 @@ import {
 import { useState } from "react"
 import { readTodayTasksWithDate } from "@/actions/history/read-today-tasks-with-date"
 import { useRouter } from "next/navigation"
+import { useDate } from "../providers/date-provider";
 
 interface Props {
 
@@ -21,6 +22,8 @@ interface Props {
 }
 
 export default function DatePicker({ className }: Props) {
+
+    const dateContext = useDate();
 
     const [date, setDate] = useState<Date>(new Date());
 
@@ -32,9 +35,11 @@ export default function DatePicker({ className }: Props) {
 
         await readTodayTasksWithDate({ date: selectedDate });
 
-        router.refresh();
-
         setDate(selectedDate);
+
+        dateContext.setDate(selectedDate);
+
+        router.refresh();
     }
 
     return (

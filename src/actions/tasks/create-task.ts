@@ -5,9 +5,10 @@ import { prisma } from "@/lib/prisma"
 interface Props {
 
     formData: FormData;
+    familyId: string | undefined;
 }
 
-export async function createTask({ formData }: Props): Promise<void> {
+export async function createTask({ formData, familyId }: Props): Promise<void> {
 
     try {
 
@@ -18,8 +19,9 @@ export async function createTask({ formData }: Props): Promise<void> {
 
             data: {
 
-                label,
-                description
+                label: label,
+                description: description,
+                familyId: familyId
             }
         });
     }

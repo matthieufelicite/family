@@ -16,14 +16,11 @@ model User {
     image         String?
     createdAt     DateTime  @default(now())
     updatedAt     DateTime  @updatedAt
-    familyId      String?
+    families      Family[]  @relation("UserFamilies")
     accounts      Account[]
     sessions      Session[]
-    family        Family?   @relation(fields: [familyId], references: [id], onDelete: SetNull)
     tasks         Task[]
     histories     History[]
-
-    @@index([familyId])
 }
 
 model Family {
@@ -31,7 +28,8 @@ model Family {
     name      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    users     User[]
+    users     User[]   @relation("UserFamilies")
+    tasks     Task[]
 }
 
 model Account {
@@ -75,10 +73,15 @@ model Task {
     label       String
     description String?
     userId      String?
+    familyId    String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
     user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+    family      Family?   @relation(fields: [familyId], references: [id], onDelete: Cascade)
     histories   History[]
 
     @@index([userId])
+    @@index([familyId])
 }
 
 model History {

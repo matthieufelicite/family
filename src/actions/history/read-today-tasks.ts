@@ -6,6 +6,7 @@ import { Task } from "@prisma/client";
 export type TaskWithStatus = Task & {
 
     status: boolean;
+    doneBy?: string;
 }
 
 export async function readTodayTasks(): Promise<TaskWithStatus[]> {

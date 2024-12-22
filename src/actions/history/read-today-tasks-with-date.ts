@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { Task } from "@prisma/client";
+import { endOfDay, startOfDay } from "date-fns";
 
 interface Props {
 
@@ -10,20 +11,26 @@ interface Props {
 
 export type TaskWithStatus = Task & {
 
-    status: boolean;
+    status: boolean,
+    doneBy: string
 }
 
 export async function readTodayTasksWithDate({ date }: Props): Promise<TaskWithStatus[]> {
 
-    const startOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+    const startOfToday = startOfDay(date)
 
-    const endOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+    const endOfToday = endOfDay(date)
 
     const tasks = await prisma.task.findMany({
 
         include: {
 
             histories: {
+
+                include: {
+
+                    user: true
+                },
 
                 where: {
 
@@ -45,10 +52,15 @@ export async function readTodayTasksWithDate({ date }: Props): Promise<TaskWithS
 
         const statusToday = task.histories.length > 0;
 
+        const doneBy = task.histories.length > 0
+            ? task.histories[0]?.user?.email || ""
+            : "";
+
         return {
 
             ...task,
-            status: statusToday
+            status: statusToday,
+            doneBy: doneBy
         };
     });
 

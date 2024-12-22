@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { PropsWithChildren } from "react";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "@/components/utils/theme-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
 
@@ -21,7 +21,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				<SessionProvider>
 
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-
 
 						{children}
 

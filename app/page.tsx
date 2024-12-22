@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import Dashboard from "@/components/pages/dashboard";
+import DashboardPage from "@/components/pages/dashboard";
 import Login from "@/components/pages/login";
 
 export default async function Page() {
@@ -11,5 +11,5 @@ export default async function Page() {
 		return <Login />;
 	}
 
-	return <Dashboard />;
+	return <DashboardPage />;
 }

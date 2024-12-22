@@ -27,6 +27,8 @@ export default function ReadOneTask({ task }: Props) {
                 <p className="text-xs/5 text-gray-500">{task.description}</p>
             </div>
 
+            {task.doneBy}
+
             {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
         </Card>
     );
