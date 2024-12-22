@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
-import DashboardPage from "@/components/pages/dashboard";
-import Login from "@/components/pages/login";
+import DashboardPage from "@/components/pages/dashboard-page";
+import Login from "@/components/pages/login-page";
 
 export default async function Page() {
 

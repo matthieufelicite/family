@@ -4,7 +4,7 @@ import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { FormEvent, ReactElement } from "react";
-import { deleteHistory } from "@/actions/history/delete-history";
+import deleteHistory from "@/actions/history/delete-history";
 import { useDate } from "../providers/date-provider";
 
 interface Props {

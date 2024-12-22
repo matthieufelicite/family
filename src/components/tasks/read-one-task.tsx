@@ -1,15 +1,22 @@
+"use client"
+
 import ValidateTaskButton from "./validate-task-button";
 import { Badge } from "../ui/badge";
 import ReverseTaskButton from "./reverse-task-button";
-import { TaskWithStatus } from "@/actions/history/read-today-tasks";
 import { Card } from "../ui/card";
+import { CustomTask } from "@/actions/history/read-histories";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { auth } from "@/lib/auth";
+import { useSession } from "next-auth/react";
 
 interface Props {
 
-    task: TaskWithStatus;
+    task: CustomTask;
 }
 
 export default function ReadOneTask({ task }: Props) {
+
+    const { data: session } = useSession();
 
     return (
 
@@ -21,15 +28,25 @@ export default function ReadOneTask({ task }: Props) {
 
                     <h2 className="text-sm/6 font-semibold text-primary">{task.label}</h2>
 
-                    <Badge variant="outline" className={task.status ? 'text-xs bg-green-500/10 text-green-700 border-green-500/20' : 'text-xs bg-red-500/10 text-red-700 border-red-500/20'}>{task.status ? 'Fait' : 'À faire'}</Badge>
+                    <Badge variant="outline" className={task.status ? 'text-xs bg-green-500/10 text-green-700 border-green-500/20' : 'text-xs bg-red-500/10 text-red-700 border-red-500/20'}>{task.status ? 'Fait' : 'Non fait'}</Badge>
                 </div>
 
                 <p className="text-xs/5 text-gray-500">{task.description}</p>
             </div>
 
-            {task.doneBy}
+            <div className="flex gap-6">
 
-            {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
+                <Avatar className="w-9 h-9">
+
+                    <AvatarImage src={session?.user.image} />
+
+                    <AvatarFallback>{Array.from(session?.user.email || '')[0]}</AvatarFallback>
+
+                </Avatar>
+
+                {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
+
+            </div>
         </Card>
     );
 }

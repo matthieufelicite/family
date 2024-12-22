@@ -7,7 +7,7 @@ interface Props {
     id: string;
 }
 
-export async function deleteTask({ id }: Props): Promise<void> {
+export default async function deleteTask({ id }: Props): Promise<void> {
 
     try {
 

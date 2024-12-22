@@ -1,18 +1,40 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
+import { Family } from "@prisma/client";
 
-export async function createFamily(formData: FormData) {
+interface Props {
 
-    const label = formData.get('label') as string;
-    const description = formData.get('description') as string;
+    formData: FormData;
+    userId: string;
+}
 
-    await prisma.task.create({
+export default async function createFamily({ formData, userId }: Props): Promise<Family> {
 
-        data: {
+    try {
 
-            label,
-            description
-        }
-    });
+        const name: string = formData.get('name') as string;
+
+        return await prisma.family.create({
+
+            data: {
+
+                name: name,
+
+                users: {
+
+                    connect: {
+
+                        id: userId
+                    }
+                }
+            }
+        });
+    }
+    catch (error) {
+
+        console.error("Erreur lors de la création d'une famille : ", error);
+
+        throw error;
+    }
 }

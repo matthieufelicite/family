@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma";
+import { endOfDay, startOfDay } from "date-fns";
 
 interface Props {
 
@@ -8,13 +9,13 @@ interface Props {
     date: Date;
 }
 
-export async function deleteHistory({ taskId, date }: Props): Promise<void> {
-
-    const startOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
-
-    const endOfToday = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+export default async function deleteHistory({ taskId, date }: Props): Promise<void> {
 
     try {
+
+        const startOfTheDay = startOfDay(date);
+
+        const endOfTheDay = endOfDay(date);
 
         await prisma.history.deleteMany({
 
@@ -22,8 +23,8 @@ export async function deleteHistory({ taskId, date }: Props): Promise<void> {
 
                 date: {
 
-                    gte: startOfToday,
-                    lte: endOfToday
+                    gte: startOfTheDay,
+                    lte: endOfTheDay
                 },
                 taskId: taskId
             }

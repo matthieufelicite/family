@@ -12,9 +12,9 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { useState } from "react"
-import { readTodayTasksWithDate } from "@/actions/history/read-today-tasks-with-date"
 import { useRouter } from "next/navigation"
 import { useDate } from "../providers/date-provider";
+import readHistories from "@/actions/history/read-histories";
 
 interface Props {
 
@@ -33,7 +33,7 @@ export default function DatePicker({ className }: Props) {
 
         if (!selectedDate) return;
 
-        await readTodayTasksWithDate({ date: selectedDate });
+        await readHistories({ date: selectedDate });
 
         setDate(selectedDate);
 

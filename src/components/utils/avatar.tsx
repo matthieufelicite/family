@@ -1,8 +1,9 @@
-import { handleSignOut } from "@/actions/authentication/signout";
+import handleSignOut from "@/actions/authentication/signout";
 import { Avatar as AvatarContainer, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { auth } from "@/lib/auth";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
+import Link from "next/link";
 
 export default async function Avatar() {
 
@@ -40,6 +41,6 @@ export default async function Avatar() {
 
             </DropdownMenuContent>
 
-        </DropdownMenu>
+        </DropdownMenu >
     );
 }

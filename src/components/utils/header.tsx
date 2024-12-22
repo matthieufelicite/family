@@ -1,6 +1,6 @@
 import Avatar from '@/components/utils/avatar';
 import ThemeToggle from '@/components/utils/theme-toggle';
-import FamilyChoiceContainer from '@/components/family/family-choice-container';
+import ReadFamilies from '../family/read-families';
 
 export default function Header() {
 
@@ -12,7 +12,7 @@ export default function Header() {
 
                 <div className="flex">
 
-                    <FamilyChoiceContainer />
+                    <ReadFamilies />
 
                 </div>
 

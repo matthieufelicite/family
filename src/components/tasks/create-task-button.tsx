@@ -1,6 +1,6 @@
 "use client"
 
-import { createTask } from "@/actions/tasks/create-task"
+import createTask from "@/actions/tasks/create-task"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -31,6 +31,8 @@ export default function CreateTaskButton({ className }: Props) {
     const router = useRouter();
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+
+        if (!familyContext.family) return;
 
         event.preventDefault()
 

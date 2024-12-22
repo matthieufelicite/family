@@ -2,10 +2,19 @@
 
 import { signOut } from "@/lib/auth";
 
-export async function handleSignOut() {
+export default async function handleSignOut(): Promise<void> {
 
-    await signOut({
+    try {
 
-        redirectTo: '/login'
-    });
+        await signOut({
+
+            redirectTo: '/login'
+        });
+    }
+    catch (error) {
+
+        console.error("Erreur lors de la déconnexion : ", error);
+
+        throw error;
+    }
 }

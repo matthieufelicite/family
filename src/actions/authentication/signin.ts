@@ -7,7 +7,16 @@ interface Props {
     formData: FormData;
 }
 
-export async function handleSignIn({ formData }: Props) {
+export default async function handleSignIn({ formData }: Props): Promise<void> {
 
-    await signIn('resend', formData);
+    try {
+
+        await signIn('resend', formData);
+    }
+    catch (error) {
+
+        console.error("Erreur lors de la connexion : ", error);
+
+        throw error;
+    }
 }

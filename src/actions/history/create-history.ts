@@ -6,11 +6,10 @@ interface Props {
 
     userId: string;
     taskId: string;
-    value: boolean;
     date: Date;
 }
 
-export async function createHistory({ userId, taskId, value, date }: Props): Promise<void> {
+export default async function createHistory({ userId, taskId, date }: Props): Promise<void> {
 
     try {
 
@@ -20,7 +19,7 @@ export async function createHistory({ userId, taskId, value, date }: Props): Pro
 
                 taskId: taskId,
                 userId: userId,
-                completed: value,
+                completed: true,
                 date: date
             }
         });

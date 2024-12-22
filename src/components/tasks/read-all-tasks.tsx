@@ -2,26 +2,30 @@
 
 import { useEffect, useState } from "react";
 import ReadOneTask from "./read-one-task";
-import { TaskWithStatus } from "@/actions/history/read-today-tasks";
 import { useDate } from "../providers/date-provider";
-import { readTodayTasksWithDate } from "@/actions/history/read-today-tasks-with-date";
+import readHistories from "@/actions/history/read-histories";
+import { CustomTask } from "@/actions/history/read-histories";
+import { useFamily } from "../providers/family-provider";
 
 export default function ReadAllTasks() {
 
     const dateContext = useDate();
 
-    const [tasks, setTasks] = useState<TaskWithStatus[]>([]);
+    const familyContext = useFamily();
+
+    const [tasks, setTasks] = useState<CustomTask[]>([]);
+
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
 
         async function readTasks() {
 
+            if (!familyContext.family) return;
+
             try {
 
-                console.log(dateContext.date)
-
-                setTasks(await readTodayTasksWithDate({ date: dateContext.date }));
+                setTasks(await readHistories({ date: dateContext.date, familyId: familyContext.family.id }));
             }
             catch (error) {
 
@@ -34,7 +38,7 @@ export default function ReadAllTasks() {
         }
 
         readTasks()
-    }, [dateContext])
+    }, [dateContext, familyContext.family])
 
     if (loading) {
 

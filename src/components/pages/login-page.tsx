@@ -1,21 +1,21 @@
 "use client"
 
-import { handleSignIn } from "@/actions/authentication/signin";
+import handleSignIn from "@/actions/authentication/signin";
 import Spinner from "@/components/utils/spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Login() {
+export default function LoginPage() {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 
-        e.preventDefault()
+        e.preventDefault();
 
-        setIsLoading(true)
+        setIsLoading(true);
 
         const formData = new FormData(e.currentTarget);
 
@@ -33,7 +33,6 @@ export default function Login() {
 
         <div className="h-screen flex flex-row items-center justify-center">
 
-            {/* LEFT SIDE */}
             <div className="flex-1 h-full relative hidden flex-col bg-muted dark:border-r lg:flex p-10">
 
                 <div className="absolute inset-0 bg-zinc-900" />
@@ -41,15 +40,17 @@ export default function Login() {
                 <div className="relative z-20 flex items-center text-white leading-tight text-lg font-semibold">
 
                     family.
+
                 </div>
+
             </div>
 
-            {/* RIGHT SIDE */}
             <div className="flex-1 h-full w-full p-10 flex flex-col">
 
                 <h1 className="relative z-20 flex items-center leading-tight text-lg font-semibold">
 
                     Connexion
+
                 </h1>
 
                 <form className="flex-1 flex flex-col justify-center items-center max-w-sm mx-auto gap-4" onSubmit={handleSubmit}>
@@ -61,9 +62,13 @@ export default function Login() {
                     <p className="text-center text-sm text-muted-foreground">
 
                         En cliquant sur se connecter, vous adhérez à nos{" "}<Link href="/terms" className="underline underline-offset-4 hover:text-primary">conditions d’utilisation</Link>{" "}et notre{" "}<Link href="/privacy" className="underline underline-offset-4 hover:text-primary">politique de confidentialité</Link>.
+
                     </p>
+
                 </form>
+
             </div>
+
         </div >
     );
 }
