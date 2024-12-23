@@ -11,6 +11,8 @@ interface Props {
 
 export default async function createHistory({ userId, taskId, date }: Props): Promise<void> {
 
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+
     try {
 
         await prisma.history.create({
