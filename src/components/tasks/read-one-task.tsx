@@ -33,19 +33,8 @@ export default function ReadOneTask({ task }: Props) {
                 <p className="text-xs/5 text-gray-500">{task.description}</p>
             </div>
 
-            <div className="flex gap-6">
+            {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
 
-                <Avatar className="w-9 h-9">
-
-                    <AvatarImage src={session?.user.image} />
-
-                    <AvatarFallback>{Array.from(session?.user.email || '')[0]}</AvatarFallback>
-
-                </Avatar>
-
-                {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
-
-            </div>
-        </Card>
+        </Card >
     );
 }

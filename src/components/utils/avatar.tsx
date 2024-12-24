@@ -2,7 +2,8 @@ import handleSignOut from "@/actions/authentication/signout";
 import { Avatar as AvatarContainer, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { auth } from "@/lib/auth";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
+import Link from "next/link";
 
 export default async function Avatar() {
 
@@ -30,16 +31,29 @@ export default async function Avatar() {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
+                {session ? (
+                    <Link href="/settings">
+                        <DropdownMenuItem className="cursor-pointer">
+                            <Settings className="mr-2 h-4 w-4" />
+                            Settings
+                        </DropdownMenuItem>
+                    </Link>
+                ) : (
+                    <DropdownMenuItem disabled>
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                    </DropdownMenuItem>
+                )}
 
-                    <LogOut />
+                <DropdownMenuSeparator />
 
-                    <span>Log out</span>
-
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
                 </DropdownMenuItem>
 
             </DropdownMenuContent>
 
-        </DropdownMenu >
+        </DropdownMenu>
     );
 }
