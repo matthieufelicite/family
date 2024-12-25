@@ -7,6 +7,14 @@ import { Card } from "../ui/card";
 import { CustomTask } from "@/actions/history/read-histories";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import AvatarWithTooltip from "../utils/avatar-with-tooltip";
 
 interface Props {
 
@@ -33,7 +41,13 @@ export default function ReadOneTask({ task }: Props) {
                 <p className="text-xs/5 text-gray-500">{task.description}</p>
             </div>
 
-            {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
+            <div className="flex items-center gap-6">
+
+                <AvatarWithTooltip user={task.doneBy} />
+
+                {task.status ? <ReverseTaskButton taskId={task.id} /> : <ValidateTaskButton id={task.id} />}
+
+            </div>
 
         </Card >
     );

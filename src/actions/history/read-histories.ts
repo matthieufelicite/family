@@ -1,13 +1,13 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { Task } from "@prisma/client";
+import { Task, User } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 
 export type CustomTask = Task & {
 
     status: boolean,
-    doneBy: string
+    doneBy: User
 }
 
 interface Props {
@@ -65,7 +65,7 @@ export default async function readHistories({ date, familyId }: Props): Promise<
 
         const status = task.histories.length > 0;
 
-        const doneBy = task.histories.length > 0 ? task.histories[0]?.user?.email : "";
+        const doneBy = task.histories[0]?.user;
 
         return {
 
